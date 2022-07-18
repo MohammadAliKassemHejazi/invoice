@@ -8,9 +8,9 @@ const router = express.Router();
 
 router.get("/", usersController.getIndex);
 
-router.get("/add-invoice", isAdmin, isAuth, usersController.getaddInvoice);
+router.get("/add-invoice", isAuth, usersController.getaddInvoice);
 
-router.post("/add-invoice", isAdmin, isAuth, usersController.postaddInvoice);
+router.post("/add-invoice", isAuth, usersController.postaddInvoice);
 
 router.get("/invoices-list", isAuth, usersController.getInvoices);
 
