@@ -66,13 +66,14 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(
-    "mongodb+srv://aliimohssenn:Amohsen@2022@cluster0.zgyhl.mongodb.net/Invoice?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
+  .connect(`${process.env.dataBase}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
 
   .then((result) => {
-    app.listen(3001);
+    console.log("connected");
+    app.listen(process.env.PORT || 3001);
   })
   .catch((err) => {
     console.log(err);

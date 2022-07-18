@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +17,5 @@
     "mongoose": "^6.3.5",
     "pdfkit": "^0.13.0"
   },
-  "devDependencies": {
-    "nodemon": "^2.0.16"
-  }
+  "devDependencies": {}
 }
