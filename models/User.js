@@ -10,7 +10,7 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  Invoices: {
+  invoices: {
     items: [
       {
         invoiceId: {
@@ -24,7 +24,7 @@ const userSchema = new Schema({
 });
 
 userSchema.methods.addToInvoices = function (invoice) {
-  const updatedInvoicesItems = [...this.Invoices.items];
+  const updatedInvoicesItems = [...this.invoices.items];
 
   updatedInvoicesItems.push({
     invoiceId: invoice._id,
@@ -33,7 +33,15 @@ userSchema.methods.addToInvoices = function (invoice) {
   const updatedInvoices = {
     items: updatedInvoicesItems,
   };
-  this.Invoices = updatedInvoices;
+  this.invoices = updatedInvoices;
+  return this.save();
+};
+
+userSchema.methods.removeFromCart = function (productId) {
+  const updatedCartItems = this.invoices.items.filter((item) => {
+    return item.invoiceId.toString() !== productId.toString();
+  });
+  this.invoices.items = updatedCartItems;
   return this.save();
 };
 

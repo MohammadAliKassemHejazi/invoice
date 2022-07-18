@@ -7,6 +7,7 @@ exports.getLogin = (req, res, next) => {
     errorMessage: "",
     validationErrors: [],
     isAuthenticated: req.session.isloggedIn,
+    isAdmin: req.session.admin,
   });
 };
 
@@ -15,8 +16,6 @@ exports.postLogin = (req, res, next) => {
   const password = req.body.password;
   User.findOne({ email: email, password: password })
     .then((result) => {
-      console.log(result);
-
       if (!result) {
         return res.status(422).render("user/index", {
           path: "/login",
@@ -24,7 +23,16 @@ exports.postLogin = (req, res, next) => {
           errorMessage: "",
           validationErrors: [],
           isAuthenticated: req.session.isloggedIn,
+          isAdmin: req.session.admin,
         });
+      }
+      return result;
+    })
+    .then((result) => {
+      if (result.email === "ADMIN@ADMIN.COM") {
+        req.session.admin = true;
+      } else {
+        req.session.admin = false;
       }
 
       req.session.user = result;
@@ -32,10 +40,12 @@ exports.postLogin = (req, res, next) => {
       res.render("user/invoices-list", {
         path: "/invoices-list",
         prods: "",
-        pageTitle: "User",
+        pageTitle: "Add User",
         errorMessage: "",
         validationErrors: [],
         isAuthenticated: req.session.isloggedIn,
+        isAdmin: req.session.admin,
+        Invoices: [],
       });
     })
     .catch((e) => {
@@ -52,5 +62,6 @@ exports.postLogout = (req, res, next) => {
     errorMessage: "",
     validationErrors: [],
     isAuthenticated: req.session.isloggedIn,
+    isAdmin: req.session.admin,
   });
 };

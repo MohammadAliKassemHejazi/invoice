@@ -3,6 +3,7 @@ exports.get404 = (req, res, next) => {
     pageTitle: "Page Not Found",
     path: "/404",
     isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.admin,
   });
 };
 exports.get500 = (req, res, next) => {
@@ -10,5 +11,6 @@ exports.get500 = (req, res, next) => {
     pageTitle: "Error!",
     path: "/500",
     isAuthenticated: req.session.isLoggedIn,
+    isAdmin: req.session.admin,
   });
 };

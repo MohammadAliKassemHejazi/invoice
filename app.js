@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require("express-session");
 const errorController = require("./controllers/error");
+const User = require("./models/User");
 
 const app = express();
 
@@ -17,27 +18,38 @@ app.use(
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use("/data", express.static(path.join(__dirname, "data")));
 
 const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 
-// app.use((req, res, next) => {
-//   if (!req.session.user) {
-//     return next();
-//   }
-//   User.findById(req.session.user._id)
-//     .then((user) => {
-//       if (!user) {
-//         return next();
-//       }
-//       req.user = user;
-//       next();
-//     })
-//     .catch((err) => {
-//       next(new Error(err));
-//     });
-// });
+app.use((req, res, next) => {
+  if (!req.session.user) {
+    return next();
+  }
+  User.findById(req.session.user._id)
+    .then((user) => {
+      if (!user) {
+        return next();
+      }
+      req.user = user;
+      if (user.email === "ADMIN@ADMIN.COM") {
+        req.session.admin = true;
+      } else {
+        req.session.admin = false;
+      }
+      next();
+    })
+    .catch((err) => {
+      next(new Error(err));
+    });
+});
+
+///css peek
+///Gitlens
+///import Cost
+///Errorlens
 
 app.use("/admin", adminRoutes);
 app.use(userRoutes);
@@ -45,17 +57,17 @@ app.use(authRoutes);
 app.use(errorController.get404);
 
 app.use((error, req, res, next) => {
-  console.log("error ocured");
   res.status(500).render("500", {
     pageTitle: "Error!",
     path: "/500",
     isAuthenticated: req.session.isloggedIn,
+    isAdmin: req.session.admin,
   });
 });
 
 mongoose
   .connect(
-    "mongodb+srv://mohammad:NuTTertYs12@cluster0.qt8a9.mongodb.net/AliMohsen?retryWrites=true&w=majority",
+    "mongodb+srv://aliimohssenn:Amohsen@2022@cluster0.zgyhl.mongodb.net/Invoice?retryWrites=true&w=majority",
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
 

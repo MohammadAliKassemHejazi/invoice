@@ -6,6 +6,7 @@ exports.getAddUser = (req, res, next) => {
     path: "/admin/add-user",
     errorMessage: null,
     isAuthenticated: req.session.isloggedIn,
+    isAdmin: req.session.admin,
     validationErrors: [],
   });
 };
@@ -21,6 +22,7 @@ exports.postAddUser = (req, res, next) => {
           path: "/admin/add-user",
           errorMessage: "user Already exists",
           isAuthenticated: req.session.isloggedIn,
+          isAdmin: req.session.admin,
           validationErrors: [],
         });
       }
@@ -36,6 +38,7 @@ exports.postAddUser = (req, res, next) => {
             path: "/admin/add-user",
             errorMessage: null,
             isAuthenticated: req.session.isloggedIn,
+            isAdmin: req.session.admin,
             validationErrors: [],
           });
         })

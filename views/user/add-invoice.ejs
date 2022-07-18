@@ -12,17 +12,23 @@
         <% } %>
         <form class="login-form" action="/add-invoice" method="POST">
             <div class="form-control">
-                <label for="email">From</label>
-                <input type="Text" name="from" id="email" value="<%=user%>" disabled>
-                
-            <div class="form-control">
-                <label for="email1">To</label>
-                <input list="emails" name="to" id="email1">
+                <label for="email">FROM</label>
+                <input list="emails" name="from" id="email">
                 <datalist id="emails">
                     <% for(el of emails){%>
                         <option value="<%=el%>">
                         <%}%>
                   </datalist>
+            </div>
+            <div class="form-control">
+                <label for="email1">To</label>
+                <input list="emails1" name="to" id="email1">
+                <datalist id="emails1">
+                    <% for(el of emails){%>
+                        <option value="<%=el%>">
+                        <%}%>
+                  </datalist>
+                  </div>
             <div class="form-control">
               <label for="us">US</label>
               <input 

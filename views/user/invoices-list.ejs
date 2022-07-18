@@ -1,8 +1,35 @@
 <%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/orders.css">
 </head>
 
 <body>
     <%- include('../includes/navigation.ejs') %>
-<p>invoices list </p>
+    <main>
+        <% if (Invoices.length <= 0) { %>
+            <h1>Nothing there!</h1>
+        <% } else { %>
+            <ul class="orders">
+                <% Invoices.forEach(invoice => { %>
+                   
+                    <li class="orders__item">
+                        <h1>invoice - # <%= invoice._id %> - <a href="/orders/<%= invoice._id %>">Invoice</a></h1>
+                        <ul class="orders__products">
+                           
+                            <li class="orders__products-item">From :<%= invoice.From %> </li>
+                                <li class="orders__products-item">To:<%= invoice.To %></li>
+                                <li class="orders__products-item">Date:<%= invoice.created %></li> 
+                                <% if (isAdmin) { %> 
+                                <form method="post" action="/orders/delete">
+                                    <input type="hidden" value="<%= invoice.To %>" name="To"/>
+                                    <input type="hidden" value="<%= invoice._id %>" name="Id"/>
+                                    <button type="submit">Delete</button>
+                                </form>
+                                <% } %>
+                        </ul>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } %>
+    </main>
 
     <%- include('../includes/end.ejs') %>
