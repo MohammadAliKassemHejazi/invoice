@@ -9,8 +9,6 @@
           >Invoices</a
         >
       </li>
-      <% if (isAdmin) { %>
-
       <li class="main-header__item">
         <a
           class="<%= path === '/add-invoice' ? 'active' : '' %>"
@@ -18,6 +16,8 @@
           >Add Invoice</a
         >
       </li>
+      <% if (isAdmin) { %>
+
       <li class="main-header__item">
         <a
           class="<%= path === '/admin/add-user' ? 'active' : '' %>"
@@ -53,8 +53,6 @@
         >Invoices</a
       >
     </li>
-    <% if (isAdmin) { %>
-
     <li class="mobile-nav__item">
       <a
         class="<%= path === '/add-invoice' ? 'active' : '' %>"
@@ -62,6 +60,8 @@
         >Add Invoice</a
       >
     </li>
+    <% if (isAdmin) { %>
+
     <li class="mobile-nav__item">
       <a
         class="<%= path === '/admin/add-product' ? 'active' : '' %>"
