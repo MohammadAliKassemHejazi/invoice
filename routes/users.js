@@ -14,6 +14,8 @@ router.post("/add-invoice", isAuth, usersController.postaddInvoice);
 
 router.get("/invoices-list", isAuth, usersController.getInvoices);
 
+router.post("/invoices-list", isAuth, usersController.postInvoicesDate);
+
 router.get("/orders/:orderId", isAdmin, isAuth, usersController.getInvoice);
 
 router.post("/orders/delete", isAdmin, isAuth, usersController.postdelete);

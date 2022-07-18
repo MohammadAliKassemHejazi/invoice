@@ -8,9 +8,19 @@
         <% if (Invoices.length <= 0) { %>
             <h1>Nothing there!</h1>
         <% } else { %>
+                                <form method="post" action="/invoices-list">
+                                    <lable>From this date:</lable>
+                                    <input type="date" name="fromd"/>
+                                    <br></br>
+                                    <lable>To this date:</lable>
+                                    <input type="date" name="tod"/>
+                                    <button type="submit">Submit</button>
+                                </form>
+
             <ul class="orders">
                 <% Invoices.forEach(invoice => { %>
-                   
+                    <% if (!!invoice) { %> 
+                        
                     <li class="orders__item">
                         <h1>invoice - # <%= invoice._id %> - <a href="/orders/<%= invoice._id %>">Invoice</a></h1>
                         <ul class="orders__products">
@@ -27,9 +37,12 @@
                                 <% } %>
                         </ul>
                     </li>
+                      <% } %>
                 <% }); %>
+               
             </ul>
-        <% } %>
+        <% } %> 
+       
     </main>
 
     <%- include('../includes/end.ejs') %>

@@ -17,6 +17,52 @@ exports.getIndex = (req, res, next) => {
   });
 };
 
+exports.postInvoicesDate = (req, res, next) => {
+  const first = req.body.fromd;
+  const second = req.body.tod;
+  req.user
+    .populate({
+      path: "invoices.items.invoiceId",
+      populate: { path: "From To" },
+    })
+
+    .then((result) => {
+      const view = result.invoices.items.map((value) => {
+        if (
+          value.invoiceId.createdAt.toISOString().split("T")[0] > first &&
+          value.invoiceId.createdAt.toISOString().split("T")[0] < second
+        ) {
+          return {
+            _id: value.invoiceId._id.toString(),
+            From: value.invoiceId.From.email,
+            To: value.invoiceId.To.email,
+            Us: value.invoiceId.Us,
+            Fr: value.invoiceId.Fr,
+            created: value.invoiceId.createdAt + "",
+          };
+        }
+        return;
+      });
+
+      return view;
+    })
+    .then((view) => {
+      console.log(view);
+      res.render("user/invoices-list", {
+        errorMessage: "",
+        pageTitle: "User",
+        path: "/",
+        isAuthenticated: req.session.isloggedIn,
+        isAdmin: req.session.admin,
+        validationErrors: [],
+        Invoices: view,
+      });
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+};
+
 exports.getInvoices = (req, res, next) => {
   req.user
     .populate({
