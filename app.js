@@ -66,7 +66,7 @@ app.use((error, req, res, next) => {
 });
 
 mongoose
-  .connect(`${proccess.env.dataBase}`, {
+  .connect(`${process.env.dataBase}`, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
